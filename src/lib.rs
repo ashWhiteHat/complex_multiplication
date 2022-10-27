@@ -1,14 +1,16 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+mod ec;
+mod ff;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use ff::FiniteField;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+trait ComplexMultiplication {
+    // elliptic curve param a and b
+    type A: FiniteField;
+    type B: FiniteField;
+
+    // construct complex multiplication
+    fn new(field_order: impl FiniteField, elliptic_curve_order: impl FiniteField) -> Self;
+
+    // get elliptic curve params a and b
+    fn get(self) -> (Self::A, Self::B);
 }
